@@ -3,12 +3,12 @@ var y = 0;
 var z = 0;
 var positionVar = 0;
 var altitude = 12000;
-var pitchUp = false;
-var pitchDown = false;
 var yawLeft = false;
 var yawRight = false;
-var rollLeft = false;
-var rollRight = false;
+var bulletsX = [];
+var bulletsY = [];
+var bulletsZ = [];
+var shoot = false;
 
 function preload() {
 	f16 = loadModel("f16.obj", true);
@@ -24,10 +24,6 @@ function setup() {
 	angleMode(DEGREES);
 	cam = createCamera();
 	cam.tilt(-85);
-	//textFont(gotham);  
-	textScreen = createGraphics(windowWidth, windowHeight);
-	textScreen.fill("white");
-	textScreen.text("Altitude", width / 2, height / 2);
 }
 
 function draw() {
@@ -55,8 +51,6 @@ function draw() {
 	if (x < -360) {
 		x = -360;
 	}
-	//ambientLight(255, 255, 255);
-	//directionalLight(255, 255, 255, 0, 0, altitude + 10);
 	push();
 	translate(0, 0, 0);
 	rotateX(positionVar);
@@ -70,55 +64,48 @@ function draw() {
 	rotateZ(180 + z);
 	texture(f16light);
 	model(f16);
+	if (shoot) {
+		bulletsX.push(10);
+		bulletsY.push(0);
+		bulletsZ.push(altitude);
+	}
 	pop();
 	push();
 	translate(0, -8000, altitude);
 	texture(backgroundImg);
 	box(10000, 10000);
 	pop();
+	for (var i = 0; i < bulletsX.length; i++) {
+		push();
+		translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
+		rotateX(90);
+		fill("red");
+		stroke("red");
+		cylinder(20, 1, 1, 1);
+		bulletsY[i] -= 100;
+		bulletsX[i] += Math.random() * 2;
+		if (bulletsY[i] <= - 500000) {
+			bulletsX.splice(i, 1);
+			bulletsY.splice(i, 1);
+			bulletsZ.splice(i, 1);
+		}
+		pop();
+	}
 	translate(0, 0, 0);
 	image(f16dark, width / 2, height / 2)
-	//image(textScreen, -width / 2, -height / 2);
 	cam.setPosition(0, 200, altitude + 25);
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
 }
 
 	function keyPressed() {
-		if (key == "a") {
-			yawLeft = true;
-		}
-		if (key == "s") {
-			pitchUp = true;
-		}
-		if (key == "d") {
-			yawRight = true;
-		}
-		if (keyCode == 37) {
-			rollLeft = true;
-		}
-		if (keyCode == 39) {
-			rollRight = true;
+		if (key == " ") {
+			shoot = true;
 		}
 	}
 
 	function keyReleased() {
-		if (key == "w") {
-			pitchDown = false;
-		}	
-		if (key == "a") {
-			yawLeft = false;
-		}
-		if (key == "s") {
-			pitchUp = false;
-		}
-		if (key == "d") {
-			yawRight = false;
-		}		
-		if (keyCode == 37) {
-			rollLeft = false;
-		}
-		if (keyCode == 39) {
-			rollRight = false;
+		if (key == " ") {
+			shoot = false;
 		}
 	}
