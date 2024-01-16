@@ -51,6 +51,12 @@ function draw() {
 	if (x < -360) {
 		x = -360;
 	}
+	if (y > 180) {
+		y = -180;
+	}
+	if (y < -360) {
+		y = 0;
+	}
 	push();
 	translate(0, 0, 0);
 	rotateX(positionVar);
@@ -79,8 +85,8 @@ function draw() {
 		push();
 		translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
 		rotateX(90);
-		fill("red");
-		stroke("red");
+		fill("white");
+		stroke("white");
 		cylinder(20, 1, 1, 1);
 		bulletsY[i] -= 100;
 		bulletsX[i] += Math.random() * 2;
