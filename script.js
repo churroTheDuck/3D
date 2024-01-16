@@ -20,6 +20,7 @@ function preload() {
 }
 
 function setup() {
+	frameRate(100);
 	createCanvas(windowWidth, windowHeight, WEBGL);
 	angleMode(DEGREES);
 	cam = createCamera();
