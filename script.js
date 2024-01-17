@@ -8,6 +8,8 @@ var yawRight = false;
 var bulletsX = [];
 var bulletsY = [];
 var bulletsZ = [];
+var bulletsXDir = [];
+var bulletsZDir = [];
 var shoot = false;
 
 function preload() {
@@ -74,6 +76,8 @@ function draw() {
 		bulletsX.push(10);
 		bulletsY.push(Math.random() * 20);
 		bulletsZ.push(altitude);
+		bulletsXDir.push(Math.random() * 1);
+		bulletsZDir.push(Math.random() * 1);
 	}
 	pop();
 	push();
@@ -88,12 +92,15 @@ function draw() {
 		fill("white");
 		stroke("white");
 		cylinder(20, 1, 1, 1);
+		bulletsX[i] += Math.sin(bulletsXDir[i]);
+		bulletsZ[i] += Math.cos(bulletsZDir[i]);
 		bulletsY[i] -= 50;
-		bulletsX[i] += Math.random() * 2;
 		if (bulletsY[i] <= - 50000) {
 			bulletsX.splice(i, 1);
 			bulletsY.splice(i, 1);
 			bulletsZ.splice(i, 1);
+			bulletsXDir.splice(i, 1);
+			bulletsZDir.splice(i, 1);
 		}
 		pop();
 	}
