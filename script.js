@@ -20,7 +20,6 @@ function preload() {
 }
 
 function setup() {
-	frameRate(100);
 	createCanvas(windowWidth, windowHeight, WEBGL);
 	angleMode(DEGREES);
 	cam = createCamera();
@@ -71,9 +70,9 @@ function draw() {
 	rotateZ(180 + z);
 	texture(f16light);
 	model(f16);
-	if (shoot) {
+	if (shoot && Math.random() * 1) {
 		bulletsX.push(10);
-		bulletsY.push(0);
+		bulletsY.push(Math.random() * 20);
 		bulletsZ.push(altitude);
 	}
 	pop();
@@ -89,9 +88,9 @@ function draw() {
 		fill("white");
 		stroke("white");
 		cylinder(20, 1, 1, 1);
-		bulletsY[i] -= 100;
+		bulletsY[i] -= 50;
 		bulletsX[i] += Math.random() * 2;
-		if (bulletsY[i] <= - 500000) {
+		if (bulletsY[i] <= - 50000) {
 			bulletsX.splice(i, 1);
 			bulletsY.splice(i, 1);
 			bulletsZ.splice(i, 1);
