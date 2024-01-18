@@ -13,7 +13,7 @@ var bulletsZDir = [];
 var shoot = false;
 
 function preload() {
-	f16 = loadModel("f16.obj", true);
+	f16 = loadModel("f16.stl", true);
 	f16light = loadImage("f16light.png");
 	f16dark = loadImage("f16dark.png");
 	landTexture = loadImage("land.jpg");
@@ -26,6 +26,9 @@ function setup() {
 	angleMode(DEGREES);
 	cam = createCamera();
 	cam.tilt(-85);
+	for(let i=0; i< f16.uvs.length; i++) {
+		f16.uvs[i][1] = 1.-f16.uvs[i][1];
+	  }
 }
 
 function draw() {
