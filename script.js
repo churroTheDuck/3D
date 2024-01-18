@@ -14,6 +14,7 @@ var shoot = false;
 
 function preload() {
 	f16 = loadModel("f16.stl", true);
+	f16Img = loadImage("f16.png");
 	f16light = loadImage("f16light.png");
 	f16dark = loadImage("f16dark.png");
 	landTexture = loadImage("land.jpg");
@@ -26,9 +27,10 @@ function setup() {
 	angleMode(DEGREES);
 	cam = createCamera();
 	cam.tilt(-85);
+	print(f16.uvs)
 	for(let i=0; i< f16.uvs.length; i++) {
 		f16.uvs[i][1] = 1.-f16.uvs[i][1];
-	  }
+	}
 }
 
 function draw() {
@@ -73,7 +75,8 @@ function draw() {
 	rotateY(-y);
 	translate(0, 0, 10);
 	rotateZ(180 + z);
-	texture(f16light);
+	noStroke();
+	texture(f16Img);
 	model(f16);
 	if (shoot && Math.random() * 1) {
 		bulletsX.push(10);
@@ -108,8 +111,13 @@ function draw() {
 		pop();
 	}
 	translate(0, 0, 0);
-	image(f16dark, width / 2, height / 2)
 	cam.setPosition(0, 200, altitude + 25);
+	if (yawLeft) {
+		z -= 1;
+	}
+	if (yawRight) {
+		z += 1;
+	}
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
 }
@@ -118,10 +126,22 @@ function draw() {
 		if (key == " ") {
 			shoot = true;
 		}
+		if (key == "a") {
+			yawLeft = true;
+		}
+		if (key == "d") {
+			yawRight = true;
+		}
 	}
 
 	function keyReleased() {
 		if (key == " ") {
 			shoot = false;
+		}		
+		if (key == "a") {
+			yawLeft = false;
+		}
+		if (key == "d") {
+			yawRight = false;
 		}
 	}
