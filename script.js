@@ -20,6 +20,7 @@ function preload() {
 	landTexture = loadImage("land.jpg");
 	backgroundImg = loadImage("background.jpg");  
 	gotham = loadFont("Gotham-XLight.otf");
+	shot = loadSound("shot.mp3");
 }
 
 function setup() {
@@ -84,6 +85,7 @@ function draw() {
 		bulletsZ.push(altitude);
 		bulletsXDir.push(Math.random() * 1);
 		bulletsZDir.push(Math.random() * 1);
+		shot.play();
 	}
 	pop();
 	push();
