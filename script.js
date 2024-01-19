@@ -11,6 +11,7 @@ var bulletsZ = [];
 var bulletsXDir = [];
 var bulletsZDir = [];
 var shoot = false;
+var timeMillis = 0;
 
 function preload() {
 	f16 = loadModel("f16.stl", true);
@@ -28,6 +29,7 @@ function setup() {
 	angleMode(DEGREES);
 	cam = createCamera();
 	cam.tilt(-85);
+	shot.setVolume(0.1);
 	print(f16.uvs)
 	for(let i=0; i< f16.uvs.length; i++) {
 		f16.uvs[i][1] = 1.-f16.uvs[i][1];
@@ -85,7 +87,6 @@ function draw() {
 		bulletsZ.push(altitude);
 		bulletsXDir.push(Math.random() * 1);
 		bulletsZDir.push(Math.random() * 1);
-		shot.play();
 	}
 	pop();
 	push();
@@ -102,7 +103,7 @@ function draw() {
 		cylinder(20, 1, 1, 1);
 		bulletsX[i] += Math.sin(bulletsXDir[i]);
 		bulletsZ[i] += Math.cos(bulletsZDir[i]);
-		bulletsY[i] -= 50;
+		bulletsY[i] -= 100;
 		if (bulletsY[i] <= - 50000) {
 			bulletsX.splice(i, 1);
 			bulletsY.splice(i, 1);
@@ -119,6 +120,12 @@ function draw() {
 	}
 	if (yawRight) {
 		z += 1;
+	}
+	if (millis() - timeMillis > 30) {
+		if (shoot) {
+			shot.play();
+		}
+		timeMillis = millis()
 	}
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
