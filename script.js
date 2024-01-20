@@ -27,9 +27,13 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight, WEBGL);
 	angleMode(DEGREES);
+	textAlign(CENTER);
 	cam = createCamera();
 	cam.tilt(-85);
 	shot.setVolume(0.1);
+	hud = createGraphics(windowWidth, windowHeight);
+	hud.fill("white");
+	hud.text("HELLO MY NAME IS LANG", 100, 100);
 	print(f16.uvs)
 	for(let i=0; i< f16.uvs.length; i++) {
 		f16.uvs[i][1] = 1.-f16.uvs[i][1];
@@ -66,7 +70,11 @@ function draw() {
 	}
 	if (y < -360) {
 		y = 0;
-	}
+	} 
+	drawingContext.disable(drawingContext.DEPTH_TEST)
+	drawingContext.enable(drawingContext.BLEND)
+	image(hud, -width / 2, -height / 2);
+	drawingContext.enable(drawingContext.DEPTH_TEST)
 	push();
 	translate(0, 0, 0);
 	rotateX(positionVar);
