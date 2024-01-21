@@ -1,4 +1,4 @@
-var x = -180;
+var x = 0;
 var y = 0;
 var z = 0;
 var positionVar = 0;
@@ -14,10 +14,9 @@ var shoot = false;
 var timeMillis = 0;
 
 function preload() {
-	f16 = loadModel("f16.stl", true);
-	f16Img = loadImage("f16.png");
+	f16 = loadModel("f161.obj", true);
 	f16light = loadImage("f16light.png");
-	f16dark = loadImage("f16dark.png");
+	f16dark = loadImage("f16dark1.jpeg");
 	landTexture = loadImage("land.jpg");
 	backgroundImg = loadImage("background.jpg");  
 	gotham = loadFont("Gotham-XLight.otf");
@@ -28,6 +27,8 @@ function setup() {
 	createCanvas(windowWidth, windowHeight, WEBGL);
 	angleMode(DEGREES);
 	textAlign(CENTER);
+	textFont(gotham);
+	textSize(20);
 	cam = createCamera();
 	cam.tilt(-85);
 	shot.setVolume(0.1);
@@ -35,9 +36,9 @@ function setup() {
 	hud.fill("white");
 	hud.text("HELLO MY NAME IS LANG", 100, 100);
 	print(f16.uvs)
-	for(let i=0; i< f16.uvs.length; i++) {
+	/*for(let i=0; i< f16.uvs.length; i++) {
 		f16.uvs[i][1] = 1.-f16.uvs[i][1];
-	}
+	}*/
 }
 
 function draw() {
@@ -83,11 +84,12 @@ function draw() {
 	pop();
 	push();
 	translate(0, 0, altitude);
-	rotateY(-y);
-	translate(0, 0, 10);
-	rotateZ(180 + z);
+	translate(0, 0, 0);
+	rotateX(180);
+	rotateZ(z + 90);
+	rotateX(y - 90);
 	noStroke();
-	texture(f16Img);
+	texture(f16dark);
 	model(f16);
 	if (shoot && Math.random() * 1) {
 		bulletsX.push(10);
@@ -129,7 +131,7 @@ function draw() {
 	if (yawRight) {
 		z += 1;
 	}
-	if (millis() - timeMillis > 30) {
+	if (millis() - timeMillis > 33) {
 		if (shoot) {
 			shot.play();
 		}
