@@ -21,6 +21,7 @@ function preload() {
 	backgroundImg = loadImage("background.jpg");  
 	gotham = loadFont("Gotham-XLight.otf");
 	shot = loadSound("shot.mp3");
+	engine = loadSound("engine.mp3");
 }
 
 function setup() {
@@ -28,21 +29,19 @@ function setup() {
 	angleMode(DEGREES);
 	textAlign(CENTER);
 	textFont(gotham);
-	textSize(20);
 	cam = createCamera();
 	cam.tilt(-85);
-	shot.setVolume(0.1);
-	hud = createGraphics(windowWidth, windowHeight);
+	hud = createGraphics(width / 10, height / 2);
+	hud.background("green");
 	hud.fill("white");
-	hud.text("HELLO MY NAME IS LANG", 100, 100);
-	print(f16.uvs)
-	/*for(let i=0; i< f16.uvs.length; i++) {
-		f16.uvs[i][1] = 1.-f16.uvs[i][1];
-	}*/
+	hud.text("Altitude", width / 20, height / 20);
 }
 
 function draw() {
-	background(0);
+	background(0);  
+	if (!engine.isPlaying()) {
+		engine.play();
+	  }
 	if (yawLeft) {
 		z -= 1;
 	}
@@ -72,10 +71,6 @@ function draw() {
 	if (y < -360) {
 		y = 0;
 	} 
-	drawingContext.disable(drawingContext.DEPTH_TEST)
-	drawingContext.enable(drawingContext.BLEND)
-	image(hud, -width / 2, -height / 2);
-	drawingContext.enable(drawingContext.DEPTH_TEST)
 	push();
 	translate(0, 0, 0);
 	rotateX(positionVar);
