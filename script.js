@@ -35,6 +35,10 @@ function setup() {
 	hud.background("green");
 	hud.fill("white");
 	hud.text("Altitude", width / 20, height / 20);
+	sight = createGraphics(10, 10);
+	sight.noFill();
+	sight.stroke("green");
+	sight.ellipse(0, 0, 10, 10);
 }
 
 function draw() {
@@ -93,6 +97,14 @@ function draw() {
 		bulletsXDir.push(Math.random() * 1);
 		bulletsZDir.push(Math.random() * 1);
 	}
+	pop();
+	push();
+	translate(2, 0, altitude + 30);
+	rotateX(90);
+	noFill();
+	stroke("green");
+	strokeWeight(0.5);
+	torus(2, 1, 16, 1);
 	pop();
 	push();
 	translate(0, -8000, altitude);
