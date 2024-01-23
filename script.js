@@ -12,7 +12,7 @@ var bulletsXDir = [];
 var bulletsZDir = [];
 var shoot = false;
 var timeMillis = 0;
-var alive = false;
+var alive = true;
 
 function preload() {
 	f16 = loadModel("f161.obj", true);
