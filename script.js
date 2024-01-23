@@ -12,7 +12,7 @@ var bulletsXDir = [];
 var bulletsZDir = [];
 var shoot = false;
 var timeMillis = 0;
-var alive = true;
+var alive = false;
 
 function preload() {
 	f16 = loadModel("f161.obj", true);
@@ -40,6 +40,9 @@ function setup() {
 	hud.background("green");
 	hud.fill("white");
 	hud.text("Altitude", width / 20, height / 20);
+	homeScreen = createGraphics(width, height);
+	homeScreen.fill("white");
+	homeScreen.text("GAME OVER", 100, 100);
 	sight = createGraphics(10, 10);
 	sight.noFill();
 	sight.stroke("green");
@@ -108,7 +111,6 @@ function draw() {
 	}
 	pop();
 	push();
-	//translate(2, 0, altitude + 26);
 	translate(2, 0, altitude + (x + 180) / 50 + 24);
 	rotateX(90);
 	noFill();
@@ -156,7 +158,19 @@ function draw() {
 	}
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
-}
+	if (altitude <= 10000) {
+		alive = false;
+	}
+	} else {
+		background(0);
+		push();
+		translate(0, 0, 1000);
+		rotateX(90);
+		cam.setPosition(0, 0, 0);
+		//texture(homeScreen);
+		box(500);
+		pop();
+	}
 }
 
 	function keyPressed() {
