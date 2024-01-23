@@ -12,6 +12,7 @@ var bulletsXDir = [];
 var bulletsZDir = [];
 var shoot = false;
 var timeMillis = 0;
+var alive = true;
 
 function preload() {
 	f16 = loadModel("f161.obj", true);
@@ -46,6 +47,7 @@ function setup() {
 }
 
 function draw() {
+	if (alive) {
 	background(0);  
 	if (!music.isPlaying()) {
 		music.play();
@@ -106,7 +108,8 @@ function draw() {
 	}
 	pop();
 	push();
-	translate(2, 0, altitude + 26);
+	//translate(2, 0, altitude + 26);
+	translate(2, 0, altitude + (x + 180) / 50 + 24);
 	rotateX(90);
 	noFill();
 	stroke("green");
@@ -153,6 +156,7 @@ function draw() {
 	}
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
+}
 }
 
 	function keyPressed() {
