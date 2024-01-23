@@ -22,6 +22,7 @@ function preload() {
 	gotham = loadFont("Gotham-XLight.otf");
 	shot = loadSound("shot.mp3");
 	engine = loadSound("engine.mp3");
+	music = loadSound("music.mp3");
 }
 
 function setup() {
@@ -29,6 +30,9 @@ function setup() {
 	angleMode(DEGREES);
 	textAlign(CENTER);
 	textFont(gotham);
+	shot.setVolume(0.3);
+	music.setVolume(0.5);
+	engine.setVolume(0.5);
 	cam = createCamera();
 	cam.tilt(-85);
 	hud = createGraphics(width / 10, height / 2);
@@ -43,9 +47,12 @@ function setup() {
 
 function draw() {
 	background(0);  
+	if (!music.isPlaying()) {
+		music.play();
+	  }
 	if (!engine.isPlaying()) {
 		engine.play();
-	  }
+	}
 	if (yawLeft) {
 		z -= 1;
 	}
@@ -99,7 +106,7 @@ function draw() {
 	}
 	pop();
 	push();
-	translate(2, 0, altitude + 30);
+	translate(2, 0, altitude + 26);
 	rotateX(90);
 	noFill();
 	stroke("green");
