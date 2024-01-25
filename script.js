@@ -161,7 +161,7 @@ function draw() {
 	}
 	positionVar -= 0.1;
 	altitude -= ((x + 180) / 100);
-	if (altitude <= 10000) {
+	if (altitude <= 10015) {
 		alive = false;
 	}
 	} else {
