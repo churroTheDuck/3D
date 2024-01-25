@@ -13,6 +13,7 @@ var bulletsZDir = [];
 var shoot = false;
 var timeMillis = 0;
 var alive = true;
+var tilted = false;
 
 function preload() {
 	f16 = loadModel("f161.obj", true);
@@ -41,8 +42,10 @@ function setup() {
 	hud.fill("white");
 	hud.text("Altitude", width / 20, height / 20);
 	homeScreen = createGraphics(width, height);
+	homeScreen.textAlign(CENTER);
 	homeScreen.fill("white");
-	homeScreen.text("GAME OVER", 100, 100);
+	homeScreen.textSize(200);
+	homeScreen.text("GAME OVER", width / 2, height / 2);
 	sight = createGraphics(10, 10);
 	sight.noFill();
 	sight.stroke("green");
@@ -162,13 +165,17 @@ function draw() {
 		alive = false;
 	}
 	} else {
+		if (!tilted) {
+			cam.tilt(85);
+			tilted = true;
+		}
 		background(0);
 		push();
-		translate(0, 0, 1000);
-		rotateX(90);
-		cam.setPosition(0, 0, 0);
-		//texture(homeScreen);
-		box(500);
+		translate(0, 0, 0);
+		cam.setPosition(0, 0, 1000);
+		texture(homeScreen);
+		noStroke();
+		plane(1200);
 		pop();
 	}
 }
