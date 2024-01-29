@@ -22,8 +22,8 @@ function setup() {
 function draw() {
 	push();
 	if (shoot) {
-		bulletsX.push(-100);
-		bulletsY.push(0);
+		bulletsX.push(0);
+		bulletsY.push(200);
 		bulletsZ.push(0);
 		bulletsXDir.push();
 		bulletsZDir.push();
@@ -42,10 +42,11 @@ function draw() {
 		game.translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
 		game.fill("white");
 		game.noStroke();
-		game.box(10);
-		bulletsX[i] += Math.sin(bulletsXDir[i]);
-		bulletsZ[i] += Math.cos(bulletsZDir[i]);
-		bulletsZ[i] -= 10;
+		game.box(5);
+		//bulletsX[i] += Math.sin(bulletsXDir[i]);
+		//bulletsY[i] += Math.cos(bulletsZDir[i]);
+		bulletsY[i] -= 1
+		bulletsZ[i] -= 50;
 		if (bulletsY[i] >= 50000) {
 			bulletsX.splice(i, 1);
 			bulletsY.splice(i, 1);
