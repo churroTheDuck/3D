@@ -28,14 +28,14 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(windowWidth, windowHeight, WEBGL);
-	angleMode(DEGREES);
-	textAlign(CENTER);
+	createCanvas(windowWidth, windowHeight);
 	textFont(gotham);
 	shot.setVolume(0.3);
 	music.setVolume(0.5);
 	engine.setVolume(0.5);
-	cam = createCamera();
+	game = createGraphics(width / 2, height / 2, WEBGL);
+	game.angleMode(DEGREES);
+	cam = game.createCamera();
 	cam.tilt(-85);
 	hud = createGraphics(width / 10, height / 2);
 	hud.background("green");
@@ -54,7 +54,7 @@ function setup() {
 
 function draw() {
 	if (alive) {
-	background(0);  
+	game.background(0);  
 	if (!music.isPlaying()) {
 		music.play();
 	  }
@@ -90,21 +90,21 @@ function draw() {
 	if (y < -360) {
 		y = 0;
 	} 
-	push();
-	translate(0, 0, 0);
-	rotateX(positionVar);
-	texture(landTexture);
-	sphere(10000, 100, 100);
-	pop();
-	push();
-	translate(0, 0, altitude);
-	translate(0, 0, 0);
-	rotateX(180);
-	rotateZ(z + 90);
-	rotateX(y - 90);
-	noStroke();
-	texture(f16dark);
-	model(f16);
+	game.push();
+	game.translate(0, 0, 0);
+	game.rotateX(positionVar);
+	game.texture(landTexture);
+	game.sphere(10000, 100, 100);
+	game.pop();
+	game.push();
+	game.translate(0, 0, altitude);
+	game.translate(0, 0, 0);
+	game.rotateX(180);
+	game.rotateZ(z + 90);
+	game.rotateX(y - 90);
+	game.noStroke();
+	game.texture(f16dark);
+	game.model(f16);
 	if (shoot && Math.random() * 1) {
 		bulletsX.push(10);
 		bulletsY.push(Math.random() * 20);
@@ -112,27 +112,27 @@ function draw() {
 		bulletsXDir.push(Math.random() * 1);
 		bulletsZDir.push(Math.random() * 1);
 	}
-	pop();
-	push();
-	translate(2, 0, altitude + (x + 180) / 50 + 24);
-	rotateX(90);
-	noFill();
-	stroke("green");
-	strokeWeight(0.5);
-	torus(2, 1, 16, 1);
-	pop();
-	push();
-	translate(0, -8000, altitude);
-	texture(backgroundImg);
-	box(10000, 10000);
-	pop();
+	game.pop();
+	game.push();
+	game.translate(2, 0, altitude + (x + 180) / 50 + 24);
+	game.rotateX(90);
+	game.noFill();
+	game.stroke("green");
+	game.strokeWeight(0.5);
+	game.torus(2, 1, 16, 1);
+	game.pop();
+	game.push();
+	game.translate(0, -8000, altitude);
+	game.texture(backgroundImg);
+	game.box(10000, 10000);
+	game.pop();
 	for (var i = 0; i < bulletsX.length; i++) {
-		push();
-		translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
-		rotateX(90);
-		fill("white");
-		stroke("white");
-		cylinder(20, 1, 1, 1);
+		game.push();
+		game.translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
+		game.rotateX(90);
+		game.fill("white");
+		game.stroke("white");
+		game.cylinder(20, 1, 1, 1);
 		bulletsX[i] += Math.sin(bulletsXDir[i]);
 		bulletsZ[i] += Math.cos(bulletsZDir[i]);
 		bulletsY[i] -= 100;
@@ -143,9 +143,9 @@ function draw() {
 			bulletsXDir.splice(i, 1);
 			bulletsZDir.splice(i, 1);
 		}
-		pop();
+		game.pop();
 	}
-	translate(0, 0, 0);
+	game.translate(0, 0, 0);
 	cam.setPosition(0, 200, altitude + 25);
 	if (yawLeft) {
 		z -= 1;
@@ -164,6 +164,10 @@ function draw() {
 	if (altitude <= 10015) {
 		alive = false;
 	}
+	image(game, 0, 0, width, height);
+	fill("white");
+	textSize(100);
+	text("Altitude: " + Math.round(altitude), 500, 200);
 	} else {
 		if (!tilted) {
 			cam.tilt(85);
