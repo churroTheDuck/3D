@@ -58,18 +58,18 @@ function draw() {
 	for (var i = 0; i < bulletsX.length; i++) {
 		game.push();
 		game.translate(bulletsX[i], bulletsY[i], bulletsZ[i]);
-		game.fill("white");
+		game.fill("red");
 		game.noStroke();
-		game.sphere(5);
+		game.sphere(3);
 		bulletsX[i] += Math.sin(bulletsXDir[i]) * 50;
 		bulletsY[i] += Math.cos(bulletsYDir[i]) * 10;
 		bulletsZ[i] -= 50;
-		if (bulletsY[i] >= 50000) {
+		if (bulletsY[i] >= 20000) {
 			bulletsX.splice(i, 1);
 			bulletsY.splice(i, 1);
 			bulletsZ.splice(i, 1);
 			bulletsXDir.splice(i, 1);
-			bulletsZDir.splice(i, 1);
+			bulletsYDir.splice(i, 1);
 		}
 		game.pop();
 	}
