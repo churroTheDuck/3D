@@ -146,7 +146,7 @@ function draw() {
 		game.pop();
 	}
 	game.translate(0, 0, 0);
-	cam.setPosition(0, 200, altitude + 25);
+	cam.setPosition(0, 210, altitude + 25);
 	if (yawLeft) {
 		z -= 1;
 	}
