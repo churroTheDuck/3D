@@ -16,9 +16,8 @@ var alive = true;
 var tilted = false;
 
 function preload() {
-	f16 = loadModel("f161.obj", true);
-	f16light = loadImage("f16light.png");
-	f16dark = loadImage("f16dark1.jpeg");
+	f16 = loadModel("f16.obj", true)
+	f16dark = loadImage("f16dark.jpeg");
 	landTexture = loadImage("land.jpg");
 	backgroundImg = loadImage("background.jpg");  
 	gotham = loadFont("Gotham-XLight.otf");
@@ -30,6 +29,7 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	textFont(gotham);
+	ellipseMode(CENTER);
 	shot.setVolume(0.3);
 	music.setVolume(0.5);
 	engine.setVolume(0.5);
@@ -113,14 +113,14 @@ function draw() {
 		bulletsZDir.push(Math.random() * 1);
 	}
 	game.pop();
-	game.push();
+	/*game.push();
 	game.translate(2, 0, altitude + (x + 180) / 50 + 24);
 	game.rotateX(90);
 	game.noFill();
 	game.stroke("green");
 	game.strokeWeight(0.5);
 	game.torus(2, 1, 16, 1);
-	game.pop();
+	game.pop();*/
 	game.push();
 	game.translate(0, -8000, altitude);
 	game.texture(backgroundImg);
@@ -165,22 +165,17 @@ function draw() {
 		alive = false;
 	}
 	image(game, 0, 0, width, height);
+	//noFill();
+	stroke("green");
+	strokeWeight(1);
+	ellipse(width / 2, height / 2, 10, 10);
 	fill("white");
 	textSize(100);
 	text("Altitude: " + Math.round(altitude), 500, 200);
 	} else {
-		if (!tilted) {
-			cam.tilt(85);
-			tilted = true;
-		}
 		background(0);
-		push();
-		translate(0, 0, 0);
-		cam.setPosition(0, 0, 1000);
-		texture(homeScreen);
-		noStroke();
-		plane(1200);
-		pop();
+		textAlign(CENTER);
+		text("GAME OVER", width / 2, height / 2);
 	}
 }
 
